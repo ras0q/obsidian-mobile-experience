@@ -22,7 +22,12 @@ export default class MobileExperiencePlugin extends Plugin {
           const textbox = leaf?.view.containerEl.querySelector(
             ".cm-lineWrapping",
           );
-          textbox?.addClass("omx-disable-sidebar-on-input-focus");
+          if (!textbox || !(textbox instanceof HTMLElement)) return;
+
+          textbox.addClass("omx-disable-sidebar-on-input-focus");
+          textbox.addEventListener("touchstart", (e) => {
+            e.stopPropagation();
+          });
         }
       }),
     );
